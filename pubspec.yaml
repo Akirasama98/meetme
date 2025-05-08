@@ -33,6 +33,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   intl: ^0.18.1
   supabase_flutter: ^2.0.0
+  uuid: ^4.2.1
 
 dev_dependencies:
   flutter_test:

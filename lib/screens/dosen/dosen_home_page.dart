@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meetme/screens/dosen/dosen_profile_page.dart';
 import 'package:meetme/services/auth_service.dart';
+import 'package:meetme/screens/chat/chat_list_page.dart';
 
 class DosenHomePage extends StatefulWidget {
   const DosenHomePage({super.key});
@@ -321,7 +322,12 @@ class _DosenHomePageState extends State<DosenHomePage> {
             children: [
               _buildNavItem(Icons.home, 'Home', true),
               _buildNavItem(Icons.calendar_today, 'Jadwal', false),
-              _buildNavItem(Icons.chat_bubble_outline, 'Chat', false),
+              _buildNavItem(Icons.chat_bubble_outline, 'Chat', false, onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatListPage()),
+                );
+              }),
               _buildNavItem(Icons.person_outline, 'Profil', false, onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -335,4 +341,5 @@ class _DosenHomePageState extends State<DosenHomePage> {
     );
   }
 }
+
 

@@ -7,12 +7,15 @@ class MahasiswaRepository {
   // Mendapatkan data mahasiswa berdasarkan ID
   Future<Mahasiswa?> getMahasiswaById(String id) async {
     try {
-      final response = await _mahasiswaTable
-          .select()
-          .eq('id', id)
-          .single();
-      
-      return Mahasiswa.fromJson(response);
+      final response = await _mahasiswaTable.select().eq('id', id);
+
+      // Jika response kosong, kembalikan null
+      if (response.isEmpty) {
+        return null;
+      }
+
+      // Jika ada data, kembalikan data pertama
+      return Mahasiswa.fromJson(response.first);
     } catch (e) {
       print('Error getting mahasiswa: $e');
       return null;
@@ -22,12 +25,15 @@ class MahasiswaRepository {
   // Mendapatkan data mahasiswa berdasarkan NIM
   Future<Mahasiswa?> getMahasiswaByNim(String nim) async {
     try {
-      final response = await _mahasiswaTable
-          .select()
-          .eq('nim', nim)
-          .single();
-      
-      return Mahasiswa.fromJson(response);
+      final response = await _mahasiswaTable.select().eq('nim', nim);
+
+      // Jika response kosong, kembalikan null
+      if (response.isEmpty) {
+        return null;
+      }
+
+      // Jika ada data, kembalikan data pertama
+      return Mahasiswa.fromJson(response.first);
     } catch (e) {
       print('Error getting mahasiswa by NIM: $e');
       return null;
@@ -37,12 +43,15 @@ class MahasiswaRepository {
   // Mendapatkan data mahasiswa berdasarkan user ID (untuk autentikasi)
   Future<Mahasiswa?> getMahasiswaByUserId(String userId) async {
     try {
-      final response = await _mahasiswaTable
-          .select()
-          .eq('user_id', userId)
-          .single();
-      
-      return Mahasiswa.fromJson(response);
+      final response = await _mahasiswaTable.select().eq('user_id', userId);
+
+      // Jika response kosong, kembalikan null
+      if (response.isEmpty) {
+        return null;
+      }
+
+      // Jika ada data, kembalikan data pertama
+      return Mahasiswa.fromJson(response.first);
     } catch (e) {
       print('Error getting mahasiswa by user ID: $e');
       return null;
@@ -50,14 +59,16 @@ class MahasiswaRepository {
   }
 
   // Mendapatkan jadwal bimbingan mahasiswa
-  Future<List<Map<String, dynamic>>> getJadwalBimbingan(String mahasiswaId) async {
+  Future<List<Map<String, dynamic>>> getJadwalBimbingan(
+    String mahasiswaId,
+  ) async {
     try {
       final response = await SupabaseService.client
           .from('jadwal_bimbingan')
           .select('*, dosen(*)')
           .eq('mahasiswa_id', mahasiswaId)
           .order('tanggal', ascending: true);
-      
+
       return List<Map<String, dynamic>>.from(response);
     } catch (e) {
       print('Error getting jadwal bimbingan: $e');

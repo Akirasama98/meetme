@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _authService = AuthService();
-  
+
   bool _isLoading = false;
   bool _obscurePassword = true;
   String? _errorMessage;
@@ -46,13 +46,11 @@ class _LoginPageState extends State<LoginPage> {
       if (response.user != null) {
         // Login berhasil, cek role pengguna
         if (!mounted) return;
-        
+
         // Mendapatkan data pengguna dari database
         final userData = await _authService.getUserData(response.user!.id);
-        
+
         if (userData != null) {
-          print('User role: ${userData['role']}'); // Debugging
-          
           // Navigasi ke halaman yang sesuai berdasarkan role
           if (userData['role'] == 'dosen') {
             Navigator.of(context).pushReplacement(
@@ -60,7 +58,9 @@ class _LoginPageState extends State<LoginPage> {
             );
           } else if (userData['role'] == 'mahasiswa') {
             Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => const MahasiswaHomePage()),
+              MaterialPageRoute(
+                builder: (context) => const MahasiswaHomePage(),
+              ),
             );
           } else {
             // Role tidak dikenali
@@ -91,9 +91,7 @@ class _LoginPageState extends State<LoginPage> {
   void _navigateToForgotPassword() {
     // Implementasi lupa password bisa ditambahkan nanti
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Fitur lupa password belum tersedia'),
-      ),
+      const SnackBar(content: Text('Fitur lupa password belum tersedia')),
     );
   }
 
@@ -125,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Judul
                   Text(
                     'MeetMe',
@@ -138,13 +136,13 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(height: 8),
                   Text(
                     'Aplikasi Bimbingan Akademik',
-                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: Colors.grey,
-                    ),
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  
+
                   // Error message
                   if (_errorMessage != null)
                     Container(
@@ -159,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                         style: TextStyle(color: Colors.red.shade800),
                       ),
                     ),
-                  
+
                   // Email field
                   TextFormField(
                     controller: _emailController,
@@ -177,21 +175,26 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2,
+                        ),
                       ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Email tidak boleh kosong';
                       }
-                      if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
                         return 'Email tidak valid';
                       }
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
-                  
+
                   // Password field
                   TextFormField(
                     controller: _passwordController,
@@ -209,11 +212,16 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(color: Theme.of(context).primaryColor, width: 2),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).primaryColor,
+                          width: 2,
+                        ),
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                          _obscurePassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                           color: Colors.grey,
                         ),
                         onPressed: () {
@@ -234,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   const SizedBox(height: 8),
-                  
+
                   // Forgot password
                   Align(
                     alignment: Alignment.centerRight,
@@ -247,7 +255,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Login button
                   ElevatedButton(
                     onPressed: _isLoading ? null : _login,
@@ -260,22 +268,26 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       elevation: 2,
                     ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            height: 20,
-                            width: 20,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 2,
+                    child:
+                        _isLoading
+                            ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                            : const Text(
+                              'MASUK',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          )
-                        : const Text(
-                            'MASUK',
-                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                          ),
                   ),
                   const SizedBox(height: 24),
-                  
+
                   // Info text
                   Text(
                     'Hubungi administrator untuk mendapatkan akun',
@@ -291,8 +303,3 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
-
-
-
-
-

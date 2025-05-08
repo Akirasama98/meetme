@@ -3,6 +3,7 @@ import 'package:meetme/services/auth_service.dart';
 import 'package:meetme/screens/auth/login_page.dart';
 import 'package:meetme/models/mahasiswa.dart';
 import 'package:meetme/screens/mahasiswa/mahasiswa_home_page.dart';
+import 'package:meetme/screens/chat/chat_list_page.dart';
 
 class MahasiswaProfilePage extends StatefulWidget {
   const MahasiswaProfilePage({super.key});
@@ -190,7 +191,12 @@ class _MahasiswaProfilePageState extends State<MahasiswaProfilePage> {
                 );
               }),
               _buildNavItem(Icons.calendar_today, 'Jadwal', false),
-              _buildNavItem(Icons.chat_bubble_outline, 'Chat', false),
+              _buildNavItem(Icons.chat_bubble_outline, 'Chat', false, onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatListPage()),
+                );
+              }),
               _buildNavItem(Icons.person_outline, 'Profil', true),
             ],
           ),
@@ -230,4 +236,8 @@ class _MahasiswaProfilePageState extends State<MahasiswaProfilePage> {
     );
   }
 }
+
+
+
+
 

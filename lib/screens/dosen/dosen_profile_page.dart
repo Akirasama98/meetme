@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:meetme/services/auth_service.dart';
 import 'package:meetme/screens/auth/login_page.dart';
 import 'package:meetme/screens/dosen/dosen_home_page.dart';
+import 'package:meetme/screens/chat/chat_list_page.dart';
 
 class DosenProfilePage extends StatefulWidget {
   const DosenProfilePage({super.key});
@@ -227,7 +228,12 @@ class _DosenProfilePageState extends State<DosenProfilePage> {
                 );
               }),
               _buildNavItem(Icons.calendar_today, 'Jadwal', false),
-              _buildNavItem(Icons.chat_bubble_outline, 'Chat', false),
+              _buildNavItem(Icons.chat_bubble_outline, 'Chat', false, onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ChatListPage()),
+                );
+              }),
               _buildNavItem(Icons.person_outline, 'Profil', true),
             ],
           ),
@@ -236,4 +242,5 @@ class _DosenProfilePageState extends State<DosenProfilePage> {
     );
   }
 }
+
 
